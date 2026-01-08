@@ -20,6 +20,8 @@ let orderRange = [...Array(blocks.length).keys()]
 console.log(orderRange);
 console.log(shuffle(orderRange));
 
+orderRange = shuffle(orderRange)
+
 
 // Add order Css property
 
@@ -41,10 +43,61 @@ function flipBlock(selectedBlock){
 
   if(allFillpedBlocks.length === 2){
     
+    // Stop Clicking 
+    stopClicking();
     
-    
+    // check Matched Blocks
+    checkMatchedBlocks(allFillpedBlocks[0],allFillpedBlocks[1])
 
   }
+
+}
+
+// Stop Clicking 
+function stopClicking(){
+
+  blockContainer.classList.add('no-clicking')
+
+  setTimeout(() => {
+    
+    blockContainer.classList.remove('no-clicking')
+
+  }, duration);
+
+
+}
+
+
+function checkMatchedBlocks(fristBlock , secoundBlock){
+
+  let tries = document.querySelector(".tries span");
+
+  if(fristBlock.dataset.technology == secoundBlock.dataset.technology)
+{
+  fristBlock.classList.remove('is-flipped')
+  secoundBlock.classList.remove('is-flipped')
+
+
+  fristBlock.classList.add('has-match')
+  secoundBlock.classList.add('has-match')
+
+
+} else{
+
+  tries.innerHTML = parseInt(tries.innerHTML)+1;
+
+  setTimeout(() => {
+
+    fristBlock.classList.remove('is-flipped')
+  secoundBlock.classList.remove('is-flipped') 
+   
+  }, duration);
+  
+  
+
+
+}
+  
 
 }
 
@@ -52,18 +105,18 @@ function shuffle(array){
 
   let current = array.length,
     temp,
-    radom;
+    random;
 
     while(current>0){
-      radom = Math.floor(Math.random() * current) // radom = 6
+      random = Math.floor(Math.random() * current) // random = 6
 
       current--;//19
 
       temp = array[current] // temp = 19
 
-      current = array[radom] // current = 6 
+      array[current] = array[random] // current = 6 
 
-      array[radom] = temp // radom =6
+      array[random] = temp // random =6
 
     }
       return array
