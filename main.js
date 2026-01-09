@@ -10,6 +10,10 @@ document.querySelector(".control-buttons span").addEventListener('click', () => 
   document.querySelector(".control-buttons").remove()
 })
 
+let successSound = document.getElementById("success-sound");
+let failSound = document.getElementById("fail-sound");
+
+
 let duration = 1000;
 
 let blockContainer = document.querySelector(".memory-game-blocks");
@@ -68,38 +72,48 @@ function stopClicking(){
 }
 
 
-function checkMatchedBlocks(fristBlock , secoundBlock){
+function checkMatchedBlocks(firstBlock, secondBlock){
 
   let tries = document.querySelector(".tries span");
 
-  if(fristBlock.dataset.technology == secoundBlock.dataset.technology)
-{
-  fristBlock.classList.remove('is-flipped')
-  secoundBlock.classList.remove('is-flipped')
+  if (firstBlock.dataset.technology === secondBlock.dataset.technology) {
+
+    setTimeout(() => {
+      
+      firstBlock.style.visibility = "hidden";
+    secondBlock.style.visibility = "hidden";
 
 
-  fristBlock.classList.add('has-match')
-  secoundBlock.classList.add('has-match')
+    firstBlock.classList.remove('is-flipped')
+    secondBlock.classList.remove('is-flipped')
+
+    firstBlock.classList.add('has-match');
+    secondBlock.classList.add('has-match');
+
+    successSound.play()
+
+    }, duration);
 
 
-} else{
+    
 
-  tries.innerHTML = parseInt(tries.innerHTML)+1;
+  } else {
+    tries.innerHTML = parseInt(tries.innerHTML) + 1;
 
-  setTimeout(() => {
+    setTimeout(() => {
+      firstBlock.classList.remove('is-flipped');
+      secondBlock.classList.remove('is-flipped');
 
-    fristBlock.classList.remove('is-flipped')
-  secoundBlock.classList.remove('is-flipped') 
-   
-  }, duration);
-  
-  
+      failSound.play()
 
+      
+    }, duration);
+
+
+  }
 
 }
-  
 
-}
 
 function shuffle(array){
 
