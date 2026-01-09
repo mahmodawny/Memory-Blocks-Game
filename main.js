@@ -8,6 +8,20 @@ document.querySelector(".control-buttons span").addEventListener('click', () => 
     document.querySelector(".name span").innerHTML = yourName;
   }
   document.querySelector(".control-buttons").remove()
+
+  setTimeout(() => {
+    blocks.forEach(block => block.classList.add('is-flipped'));
+    
+    setTimeout(() => {
+      blocks.forEach(block => block.classList.remove('is-flipped'));
+  
+      
+      blocks.forEach(block => {
+        block.addEventListener('click', () => flipBlock(block));
+      });
+  
+    }, 2000);
+  }, 0);
 })
 
 let successSound = document.getElementById("success-sound");
@@ -21,10 +35,10 @@ let blockContainer = document.querySelector(".memory-game-blocks");
 let blocks = Array.from(blockContainer.children)
 
 let orderRange = [...Array(blocks.length).keys()]
-console.log(orderRange);
-console.log(shuffle(orderRange));
+
 
 orderRange = shuffle(orderRange)
+
 
 
 // Add order Css property
@@ -34,11 +48,11 @@ blocks.forEach((block ,index)=> {
   
   block.style.order = orderRange[index]
 
-  block.addEventListener('click',()=>{
-
-    flipBlock(block)
-  })
+  
 })
+
+
+
 
 function flipBlock(selectedBlock){
   selectedBlock.classList.add('is-flipped')
